@@ -41,7 +41,7 @@ All is done in the file `config.json`, defaults:
  * day
  * minute
  
-* folder: The folder where to look for the messages, every message must be in a separate file of any extansion.
+* folder: The folder where to look for the messages, every message must be in a separate file of any extension.
  
 * selection-type: How to get the messages, it can be:
  * random
