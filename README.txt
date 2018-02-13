@@ -8,11 +8,11 @@ The module returns a different motd every day, month, week, hour or minute, the 
 
 A `SimpleMotd` object should be created and use its attributes.
 
-```python
-from simple_motd import SimpleMotd
-simplemotd = SimpleMotd()
-# optional oarguments: config_json_file
-```
+
+    from simple_motd import SimpleMotd
+    simplemotd = SimpleMotd()
+    # optional oarguments: config_json_file
+
 
 * `config_json_file`: See [configuration file details](#modifying-configuration-file).
 
@@ -27,23 +27,23 @@ simplemotd = SimpleMotd()
 
 All is done in the file `config.json`, defaults:
 
-```javascript
-{
-   "time-period": "day",
-   "folder": "./messages",
-   "selection-type": "random"
-}
-```
-* **time-period**: Specifies the time period to change the message returned. Valid values:
+
+    {
+       "time-period": "day",
+       "folder": "./messages",
+       "selection-type": "random"
+    }
+
+* time-period: Specifies the time period to change the message returned. Valid values:
  * month
  * week
  * hour
  * day
  * minute
  
-* **folder**: The folder where to look for the messages, every message must be in a separate file of any extansion.
+* folder: The folder where to look for the messages, every message must be in a separate file of any extansion.
  
-* **selection-type**: How to get the messages, it can be:
+* selection-type: How to get the messages, it can be:
  * random
  * alphabetically-desc
  * alphabetically-asc
