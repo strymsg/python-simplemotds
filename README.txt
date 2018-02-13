@@ -8,29 +8,32 @@ The module returns a different motd every day, month, week, hour or minute, the 
 
 A `SimpleMotd` object should be created and use its attributes.
 
-    from simple_motd import SimpleMotd
-    simplemotd = SimpleMotd()
-    # optional oarguments: config_json_file
+```python
+from simple_motd import SimpleMotd
+simplemotd = SimpleMotd()
+# optional oarguments: config_json_file
+```
 
-* `config_json_file`: See [configuration file details](#modifying_configuration_file).
+* `config_json_file`: See [configuration file details](#modifying-configuration-file).
 
 ### SimpleMotd methods
 
 * `getMotdContent()`: returns the contents of the current message by reading it's file inside the `messages` folder. Contents are returned as a python string using utf-8 enconding by default.
 * `getMotdFile()`: returns a python file object (opened) to the current message.
 * `getMotdFileName()`: returns the file name of the current message.
-* `ForceNextMessage()`: Forces to change the message by selecting another file inside `messages` (or other configure) folder, returns the new filename.
+* `ForceNextMessage()`: Forces to change the message by selecting another file inside `messages` or other configured folder, returns the new filename.
 
 ## Modifying configuration file
 
 All is done in the file `config.json`, defaults:
 
-    {
-      "time-period": "day",
-      "folder": "./messages",
-      "selection-type": "random"
-    }
-
+```javascript
+{
+   "time-period": "day",
+   "folder": "./messages",
+   "selection-type": "random"
+}
+```
 * **time-period**: Specifies the time period to change the message returned. Valid values:
  * month
  * week
@@ -49,5 +52,3 @@ All is done in the file `config.json`, defaults:
  * formula <numeric formula> (not implemented yet)
 
 `alphabetically-desc` gets files by its name in a descendent order (a first and z last), `alphabetically-asc` (z first, a last). `modification-asc/desc` considers the last time of modification of the files as ordering rule.
-
-

@@ -21,7 +21,7 @@ simplemotd = SimpleMotd()
 * `getMotdContent()`: returns the contents of the current message by reading it's file inside the `messages` folder. Contents are returned as a python string using utf-8 enconding by default.
 * `getMotdFile()`: returns a python file object (opened) to the current message.
 * `getMotdFileName()`: returns the file name of the current message.
-* `ForceNextMessage()`: Forces to change the message by selecting another file inside `messages` (or other configure) folder, returns the new filename.
+* `ForceNextMessage()`: Forces to change the message by selecting another file inside `messages` or other configured folder, returns the new filename.
 
 ## Modifying configuration file
 
