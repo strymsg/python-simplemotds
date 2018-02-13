@@ -14,7 +14,7 @@ simplemotd = SimpleMotd()
 # optional oarguments: config_json_file
 ```
 
-* `config_json_file`: See [configuration file details](#modifying_configuration_file).
+* `config_json_file`: See [configuration file details](#modifying-configuration-file).
 
 ### SimpleMotd methods
 
