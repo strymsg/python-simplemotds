@@ -1,2 +1,2 @@
-include simplemotds/config.json
-recursive-include simplemotds/messages *.html *.txt *.md
+recursive-include simplemotds config.json
+recursive-include simplemotds/messages *.html

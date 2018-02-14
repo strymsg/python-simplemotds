@@ -6,15 +6,19 @@ The module returns a different motd every day, month, week, hour or minute, the 
 
 ## Initialization
 
+```bash
+pip install simplemotds
+```
+
 A `SimpleMotd` object should be created and use its attributes.
 
 ```python
 from simple_motd import SimpleMotd
-simplemotd = SimpleMotd()
-# optional oarguments: config_json_file
+simplemotd = SimpleMotd() # To use default config.json (placed on the package root)
+simplemotd = SimpleMotd(external_config_json_file="another.json") # To use different configuration file (placed anywhere you want)
 ```
 
-* `config_json_file`: See [configuration file details](#modifying-configuration-file).
+* `external_config_json_file`: See [configuration file details](#modifying-configuration-file).
 
 ### SimpleMotd methods
 
@@ -34,23 +38,21 @@ All is done in the file `config.json`, defaults:
    "selection-type": "random"
 }
 ```
-* **time-period**: Specifies the time period to change the message returned. Valid values:
- * month
- * week
- * hour
- * day
- * minute
+- **time-period**: Specifies the time period to change the message returned. Valid values:
+ - month
+ - week
+ - hour
+ - day
+ - minute
  
-* **folder**: The folder where to look for the messages, every message must be in a separate file of any extension.
+- **folder**: The folder where to look for the messages, every message must be in a separate file of any extension, for instance create a `"motds"` and place there all messages in separete files, then put `"motds"` on the .json file.
  
-* **selection-type**: How to get the messages, it can be:
- * random
- * alphabetically-desc
- * alphabetically-asc
- * modification-asc
- * modification-desc
- * formula <numeric formula> (not implemented yet)
+- **selection-type**: How to get the messages, it can be:
+ - random
+ - alphabetically-desc
+ - alphabetically-asc
+ - modification-asc
+ - modification-desc
+ - formula <numeric formula> (not implemented yet)
 
 `alphabetically-desc` gets files by its name in a descendent order (a first and z last), `alphabetically-asc` (z first, a last). `modification-asc/desc` considers the last time of modification of the files as ordering rule.
-
-

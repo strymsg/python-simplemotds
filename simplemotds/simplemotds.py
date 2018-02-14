@@ -13,48 +13,56 @@ class SimpleMotd():
     last_message = ""
     last_datetime = datetime.now()
 
-    def __init__(self, config_json_file='config.json'):
+    def __init__(self, external_config_json_file=None):
         attrs = {}
+        config_json_file = ""
+        # checking wheter external configuration file provided
+        if external_config_json_file is not None:
+            config_json_file = external_config_json_file
+        else:
+            config_json_file = os.path.join(os.path.dirname(__file__),'config.json')
+        # opening the file
         try:
-            with open(os.path.join(os.path.dirname(__file__),config_json_file), "r") as file:
+            with open(config_json_file, "r") as file:
                 attrs = json.load(file)
-                # checking values
-                time_period = attrs.get('time-period', None)
-                folder = attrs.get('folder', None)
-                selection_type = attrs.get('selection-type', None)
-                if time_period is not None:
-                    if time_period == 'day' or time_period == 'month' \
-                      or time_period == 'week' or time_period == 'hour' \
-                      or time_period == 'minute':
-                      self.time_period = time_period
-                if folder is not None:
-                    self.folder = folder
-                if selection_type is not None:
-                    if selection_type == 'random' or \
-                      selection_type == 'alphabetically-desc' or \
-                      selection_type == 'alphabetically-asc' or \
-                      selection_type == 'modification-asc' or \
-                      selection_type == 'modification-desc':
-                      self.selection_type = selection_type
         except IOError as e:
+            print("simplemotds Error: could not open", config_json_file, str(e))
             self.time_period = "day"
             self.folder = "messages"
             self.selection_type = "random"
-            self.last_message = ''
             self.last_datetime = datetime.now()
-            print("simplemotds Error: could not open", config_json_file, str(e))
-        self.last_message = ''
+            self.last_message = ''
+            return
+        # checking values
+        time_period = attrs.get('time-period', None)
+        folder = attrs.get('folder', None)
+        selection_type = attrs.get('selection-type', None)
+        if time_period is not None:
+            if time_period == 'day' or time_period == 'month' \
+              or time_period == 'week' or time_period == 'hour' \
+              or time_period == 'minute':
+                self.time_period = time_period
+        if folder is not None:
+            if folder == "./messages" or folder == "messages" or \
+              folder == "messages/":
+                self.folder = os.path.join(os.path.dirname(__file__), 'messages')
+            else:
+                self.folder = folder
+        if selection_type is not None:
+            if selection_type == 'random' or \
+              selection_type == 'alphabetically-desc' or \
+              selection_type == 'alphabetically-asc' or \
+              selection_type == 'modification-asc' or \
+              selection_type == 'modification-desc':
+                self.selection_type = selection_type
 
     def getMotdContent(self):
         if not self.checkTimePeriod():
-            path = os.path.join(os.path.dirname(__file__), self.folder)
-            with open(os.path.join(path, self.last_message)) as file:
-
+            with open(os.path.join(self.folder, self.last_message)) as file:
                 return file.read()
         # new message
         filename = self.getNextMessageFileName()
-        path = os.path.join(os.path.dirname(__file__), self.folder)
-        with open(os.path.join(path, filename)) as file:
+        with open(os.path.join(self.folder, filename)) as file:
             self.last_datetime = datetime.now()
             self.last_message = filename
             return file.read()
@@ -99,8 +107,7 @@ class SimpleMotd():
     def getMessagesFileNames(self):
         file_names = []
         try:
-            path = os.path.join(os.path.dirname(__file__), self.folder)
-            for p,d,file_names in os.walk(path):
+            for p,d,file_names in os.walk(self.folder):
                 pass
         except OSError:
             print ("Can't os.walk() on",self.folder)
@@ -136,8 +143,7 @@ class SimpleMotd():
         mods = []
         file_names = self.getMessagesFileNames()
         for f in file_names:
-            path = os.path.join(os.path.dirname(__file__), self.folder)
-            mods.append((os.path.getmtime(os.path.join(path, f)), f))
+            mods.append((os.path.getmtime(os.path.join(self.folder, f)), f))
         mods.sort()
         if asc == False:
             mods.reverse()
